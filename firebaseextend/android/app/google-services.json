@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "587148146573",
+    "firebase_url": "https://fireextend.firebaseio.com",
+    "project_id": "fireextend",
+    "storage_bucket": "fireextend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587148146573:android:43ad591c410dd833",
+        "android_client_info": {
+          "package_name": "com.example.firebaseextend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587148146573-iokrus82nu68fcrtpql54f56ct3vu61t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVkZHdqsKLOBNJchkFJdSlw_Y0RQSlS7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587148146573-iokrus82nu68fcrtpql54f56ct3vu61t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
