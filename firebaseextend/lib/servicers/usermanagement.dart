@@ -20,6 +20,7 @@ class UserManagement {
     });
   }
 
+//comment
   Widget handleAuth() {
     return StreamBuilder(
         stream: FirebaseAuth.instance.onAuthStateChanged,
