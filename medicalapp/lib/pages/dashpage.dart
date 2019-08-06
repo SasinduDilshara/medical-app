@@ -64,6 +64,7 @@ class _LogingHomeState extends State<LogingHome> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.book),
           onPressed: () {
+            // debugPrint(widget.user.email);
             navigate(AddForm(user: widget.user));
           },
           tooltip: "Click here to add a article",

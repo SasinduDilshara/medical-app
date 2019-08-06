@@ -18,7 +18,7 @@ class _AddFormState extends State<AddForm> {
   TextEditingController tec2 = TextEditingController();
   TextEditingController tec3 = TextEditingController();
   TextEditingController tec4 = TextEditingController();
-  String a;
+  dynamic a;
   CrudMethod crudObj = CrudMethod();
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   String title, description, author, treatments = '';
@@ -27,7 +27,7 @@ class _AddFormState extends State<AddForm> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    this.a = gettera();
+    // this.a = gettera();
   }
 
   @override
@@ -46,7 +46,7 @@ class _AddFormState extends State<AddForm> {
                 onSaved: (String input) {
                   this.author = input;
                 },
-                initialValue: "Unknown",
+                // initialValue: "Unknown",
                 controller: tec4,
                 decoration: InputDecoration(
                     labelText: 'Author Name',
@@ -83,7 +83,7 @@ class _AddFormState extends State<AddForm> {
                 ),
               ),
             ),
-            authorizedAccess(context),
+            // gettera(),
             Row(
               children: <Widget>[
                 Container(
@@ -91,6 +91,7 @@ class _AddFormState extends State<AddForm> {
                 ),
                 FlatButton(
                   onPressed: () {
+                    newMethod();
                     // Navigator.pop(context);
                     // debugPrint(authorizedAccess(context));
                   },
@@ -262,17 +263,66 @@ class _AddFormState extends State<AddForm> {
     }
   }
 
-  String gettera() {
+  dynamic gettera() async {
     FirebaseAuth.instance.currentUser().then((user) {
       Firestore.instance
           .collection('/users')
           .where('uid', isEqualTo: user.uid)
           .getDocuments()
-          .then((docs) {
+          .then((docs) async {
+        dynamic lib = docs.documents[0].exists;
         if (docs.documents[0].exists) {
-          return docs.documents[0].data['regnum'];
+          // debugPrint("A" * 100);
+          var reg = docs.documents[0].data['regnum'].then((String reg) {
+            debugPrint("A" * 100);
+            if (reg == '') {
+              // return Container();
+            } else {
+              // debugPrint("Notadmin" * 100);
+              // return Column(
+              //   children: <Widget>[
+              //     Padding(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: TextFormField(
+              //         onSaved: (String input) {
+              //           this.treatments = input;
+              //         },
+              //         controller: tec2,
+              //         decoration: InputDecoration(
+              //             labelText: 'Treatments',
+              //             border: OutlineInputBorder(
+              //                 borderRadius: BorderRadius.circular(5.0))),
+              //       ),
+              //     ),
+              //   ],
+              // );
+            }
+
+            // debugPrint(reg + "    " + "K" * 100);
+            // this.a = reg;
+          });
+          // this.a = reg;
         }
       });
+    });
+    // return Container();
+  }
+
+  newMethod() async {
+// You can get the documents from that collection reference, after that you should have the data from the document , something like this :
+
+    var user = await FirebaseAuth.instance.currentUser();
+    var userQuery = Firestore.instance
+        .collection('users')
+        .where('email', isEqualTo: user.email)
+        .limit(1);
+    userQuery.getDocuments().then((data) {
+      if (data.documents.length > 0) {
+        setState(() {
+          debugPrint(data.documents[0].data['country']);
+          // lastName = data.documents[0].data['lastName'];
+        });
+      }
     });
   }
 }

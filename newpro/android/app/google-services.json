@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "335032146666",
+    "firebase_url": "https://newproapp-8b291.firebaseio.com",
+    "project_id": "newproapp-8b291",
+    "storage_bucket": "newproapp-8b291.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335032146666:android:9eab1d6df6895b73",
+        "android_client_info": {
+          "package_name": "com.example.newpro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335032146666-22p17aghdeg0or6i1lmof4fubkc1edng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2pZPXUEoxii6KmRnfMUPr73ELPlWvdjA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "335032146666-22p17aghdeg0or6i1lmof4fubkc1edng.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
