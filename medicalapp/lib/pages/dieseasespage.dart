@@ -36,7 +36,7 @@ class _DieseasePageState extends State<DieseasePage> {
       appBar: AppBar(
         title: Text("Dieseases"),
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
           Search("Enter Your Dieseases"),
           Container(
@@ -66,7 +66,7 @@ class _DieseasePageState extends State<DieseasePage> {
               "2019/07/02"),
 
           // articleList(),
-          // articleList(),
+          articleList(),
         ],
       ),
     );
@@ -79,33 +79,35 @@ class _DieseasePageState extends State<DieseasePage> {
     setState(() {
       crudObj.getData().then((results) {
         articles = results;
+        if (articles != null) {
+          debugPrint("a" * 100);
+          return StreamBuilder(
+            stream: articles,
+            builder: (context, snapshot) {
+              // debugPrint(snapshot.data.documents[0]['title'] + "a" * 100000);
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  itemCount: snapshot.data.documents.length,
+                  itemBuilder: (context, i) {
+                    // debugPrint(snapshot.data.documents[i]['title']);
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DieseaseCard(
+                          snapshot.data.documents[i]['title'],
+                          snapshot.data.documents[i]['author'],
+                          snapshot.data.documents[i]['description'],
+                          ''),
+                    );
+                  },
+                ),
+              );
+            },
+          );
+        } else {
+          Text("loading");
+        }
       });
     });
-    if (articles != null) {
-      debugPrint("a" * 100);
-      return StreamBuilder(
-        stream: articles,
-        builder: (context, snapshot) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView.builder(
-              itemCount: snapshot.data.documents.length,
-              itemBuilder: (context, i) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DieseaseCard(
-                      snapshot.data.documents[i]['title'],
-                      snapshot.data.documents[i]['author'],
-                      snapshot.data.documents[i]['description'],
-                      ''),
-                );
-              },
-            ),
-          );
-        },
-      );
-    } else {
-      Text("loading");
-    }
   }
 }
