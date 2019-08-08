@@ -18,7 +18,7 @@ class _AddFormState extends State<AddForm> {
   TextEditingController tec2 = TextEditingController();
   TextEditingController tec3 = TextEditingController();
   TextEditingController tec4 = TextEditingController();
-  dynamic reg;
+  String reg;
   CrudMethod crudObj = CrudMethod();
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   String title, description, author, treatments = '';
@@ -83,25 +83,23 @@ class _AddFormState extends State<AddForm> {
                 ),
               ),
             ),
-            Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    onSaved: (String input) {
-                      this.treatments = input;
-                    },
-                    controller: tec2,
-                    decoration: InputDecoration(
-                        labelText: 'Treatments',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0))),
-                  ),
-                ),
-              ],
-            ),
             // gettera(),
-            // gettera(this.reg),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                // height: 200.0,
+                child: TextFormField(
+                  onSaved: (String input) {
+                    this.treatments = input;
+                  },
+                  controller: tec3,
+                  decoration: InputDecoration(
+                      labelText: 'Treatments',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0))),
+                ),
+              ),
+            ),
             Row(
               children: <Widget>[
                 Container(
@@ -111,7 +109,7 @@ class _AddFormState extends State<AddForm> {
                   onPressed: () {
                     // newMethod();
                     // Navigator.pop(context);
-                    debugPrint(this.reg);
+                    // debugPrint(authorizedAccess(context));
                   },
                   child: Text("Cancel"),
                   textColor: Colors.blue,
