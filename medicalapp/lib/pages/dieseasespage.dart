@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:medicalapp/componentwidgets/dieseasecard.dart';
 import 'package:medicalapp/componentwidgets/searchbar.dart';
+import 'package:medicalapp/servicers/crud/crud.dart';
 
 import 'addarticlepage.dart';
 
@@ -11,6 +12,15 @@ class DieseasePage extends StatefulWidget {
 }
 
 class _DieseasePageState extends State<DieseasePage> {
+  initState() {
+    super.initState();
+    crudObj.getData().then((results) {
+      articles = results;
+    });
+  }
+
+  CrudMethod crudObj = CrudMethod();
+  Stream articles;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,46 +65,47 @@ class _DieseasePageState extends State<DieseasePage> {
               "Recent cases of Dengue have been reported from Sri Lanka. The most affected areas include Colombo, Galle, Jaffna, and Gampaha. Risk of Dengue exists throughout the country and transmission occurs year-round. There are two peak seasons for Dengue transmission in Sri Lanka: from October to December and from May to July.",
               "2019/07/02"),
 
-          // getListView(),
+          // articleList(),
+          articleList(),
         ],
       ),
     );
   }
 
-  // ListView getListView() {
-  //   ListView getNoteListView() {
-  //     TextStyle titleStyle = Theme.of(context).textTheme.subhead;
-
-  //     return ListView.builder(
-  //       itemCount: count,
-  //       itemBuilder: (BuildContext context, int position) {
-  //         return Card(
-  //           color: Colors.white,
-  //           elevation: 2.0,
-  //           child: ListTile(
-  //             // leading: CircleAvatar(
-  //             //   backgroundColor:
-  //             //       getPriorityColor(this.noteList[position].priority),
-  //             //   child: getPriorityIcon(this.noteList[position].priority),
-  //             // ),
-  //             title: Text(
-  //               // this.noteList[position].title,
-  //               style: titleStyle,
-  //             ),
-  //             // subtitle: Text(this.noteList[position].date),
-  //             trailing: GestureDetector(
-  //               child: Icon(
-  //                 Icons.delete,
-  //                 color: Colors.grey,
-  //               ),
-  //               onTap: () {
-  //                 // _delete(context, noteList[position]);
-  //               },
-  //             ),
-  //           ),
-  //         );
-  //       },
-  //     );
-  //   }
-  // }
+  articleList() {
+    crudObj.getData().then((results) {
+      articles = results;
+    });
+    setState(() {
+      crudObj.getData().then((results) {
+        articles = results;
+      });
+    });
+    if (articles != null) {
+      debugPrint("a" * 100);
+      return StreamBuilder(
+        stream: articles,
+        builder: (context, snapshot) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView.builder(
+              itemCount: snapshot.data.documents.length,
+              itemBuilder: (context, i) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DieseaseCard(
+                      snapshot.data.documents[i]['title'],
+                      snapshot.data.documents[i]['author'],
+                      snapshot.data.documents[i]['description'],
+                      ''),
+                );
+              },
+            ),
+          );
+        },
+      );
+    } else {
+      Text("loading");
+    }
+  }
 }

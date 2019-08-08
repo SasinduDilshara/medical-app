@@ -25,12 +25,14 @@ class CrudMethod {
 
   getData() async {
     return await Firestore.instance
-        .collection('testcrud')
+        .collection('dieseaseArticles')
         .snapshots(); /*stream*/
   }
 
   getttData() async {
-    return await Firestore.instance.collection('testcrud').getDocuments();
+    return await Firestore.instance
+        .collection('dieseaseArticles')
+        .getDocuments();
   }
 
   Future<void> addData(cardata) async {
@@ -38,7 +40,7 @@ class CrudMethod {
     if (isLogged()) {
       Firestore.instance.runTransaction((Transaction crudtransaction) async {
         CollectionReference ref =
-            await Firestore.instance.collection('testcrud');
+            await Firestore.instance.collection('dieseaseArticles');
         ref.add(cardata);
       });
     } else {

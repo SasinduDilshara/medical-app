@@ -18,7 +18,7 @@ class _AddFormState extends State<AddForm> {
   TextEditingController tec2 = TextEditingController();
   TextEditingController tec3 = TextEditingController();
   TextEditingController tec4 = TextEditingController();
-  dynamic a;
+  dynamic reg;
   CrudMethod crudObj = CrudMethod();
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   String title, description, author, treatments = '';
@@ -83,7 +83,25 @@ class _AddFormState extends State<AddForm> {
                 ),
               ),
             ),
+            Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    onSaved: (String input) {
+                      this.treatments = input;
+                    },
+                    controller: tec2,
+                    decoration: InputDecoration(
+                        labelText: 'Treatments',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0))),
+                  ),
+                ),
+              ],
+            ),
             // gettera(),
+            // gettera(this.reg),
             Row(
               children: <Widget>[
                 Container(
@@ -91,9 +109,9 @@ class _AddFormState extends State<AddForm> {
                 ),
                 FlatButton(
                   onPressed: () {
-                    newMethod();
+                    // newMethod();
                     // Navigator.pop(context);
-                    // debugPrint(authorizedAccess(context));
+                    debugPrint(this.reg);
                   },
                   child: Text("Cancel"),
                   textColor: Colors.blue,
@@ -129,37 +147,6 @@ class _AddFormState extends State<AddForm> {
     );
   }
 
-  Widget gettextfield(isdoc_) {
-    // debugPrint(FirebaseAuth.instance.currentUser());
-    setState(() {
-      if (isdoc_) {
-        debugPrint(
-            "TRUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUE");
-        return Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                onSaved: (String input) {
-                  this.treatments = input;
-                },
-                controller: tec2,
-                decoration: InputDecoration(
-                    labelText: 'Treatments',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0))),
-              ),
-            ),
-          ],
-        );
-      } else {
-        debugPrint(
-            "FalSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-        return Container();
-      }
-    });
-  }
-
   Future<bool> dialogTrigger(BuildContext context) {
     return showDialog(
         context: context,
@@ -183,146 +170,5 @@ class _AddFormState extends State<AddForm> {
             ],
           );
         });
-  }
-
-  Widget buildtext(BuildContext context) {
-    return
-        //  Container(
-        //   child:
-        StreamBuilder<DocumentSnapshot>(
-      stream: Firestore.instance
-          .collection('users')
-          .document(widget.user.uid)
-          .snapshots(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (snapshot.hasData) {
-          return checkRole(snapshot.data);
-        }
-        return LinearProgressIndicator();
-      },
-      // ),
-    );
-  }
-
-  Widget checkRole(DocumentSnapshot snapshot) {
-    if (snapshot.data == null) {
-      return Center(
-        child: Text(
-            'Click save to add the article; click cancel to go to dashpage.'),
-      );
-    }
-    if (snapshot.data['regnum'] == '') {
-      return Container();
-    } else {
-      return Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              onSaved: (String input) {
-                this.treatments = input;
-              },
-              controller: tec2,
-              decoration: InputDecoration(
-                  labelText: 'Treatments',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
-            ),
-          ),
-        ],
-      );
-    }
-  }
-
-  authorizedAccess(BuildContext context) {
-    // debugPrint(this.a + " " + "klklkl" * 100);
-    if (this.a == '') {
-      return Container();
-    } else {
-      // debugPrint("Notadmin" * 100);
-      return Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              onSaved: (String input) {
-                this.treatments = input;
-              },
-              controller: tec2,
-              decoration: InputDecoration(
-                  labelText: 'Treatments',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
-            ),
-          ),
-        ],
-      );
-    }
-  }
-
-  dynamic gettera() async {
-    FirebaseAuth.instance.currentUser().then((user) {
-      Firestore.instance
-          .collection('/users')
-          .where('uid', isEqualTo: user.uid)
-          .getDocuments()
-          .then((docs) async {
-        dynamic lib = docs.documents[0].exists;
-        if (docs.documents[0].exists) {
-          // debugPrint("A" * 100);
-          var reg = docs.documents[0].data['regnum'].then((String reg) {
-            debugPrint("A" * 100);
-            if (reg == '') {
-              // return Container();
-            } else {
-              // debugPrint("Notadmin" * 100);
-              // return Column(
-              //   children: <Widget>[
-              //     Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: TextFormField(
-              //         onSaved: (String input) {
-              //           this.treatments = input;
-              //         },
-              //         controller: tec2,
-              //         decoration: InputDecoration(
-              //             labelText: 'Treatments',
-              //             border: OutlineInputBorder(
-              //                 borderRadius: BorderRadius.circular(5.0))),
-              //       ),
-              //     ),
-              //   ],
-              // );
-            }
-
-            // debugPrint(reg + "    " + "K" * 100);
-            // this.a = reg;
-          });
-          // this.a = reg;
-        }
-      });
-    });
-    // return Container();
-  }
-
-  newMethod() async {
-// You can get the documents from that collection reference, after that you should have the data from the document , something like this :
-
-    var user = await FirebaseAuth.instance.currentUser();
-    var userQuery = Firestore.instance
-        .collection('users')
-        .where('email', isEqualTo: user.email)
-        .limit(1);
-    userQuery.getDocuments().then((data) {
-      if (data.documents.length > 0) {
-        setState(() {
-          debugPrint(data.documents[0].data['country']);
-          // lastName = data.documents[0].data['lastName'];
-        });
-      }
-    });
   }
 }

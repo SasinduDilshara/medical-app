@@ -8,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:medicalapp/pages/dashpage.dart';
 
 class UserManagement {
-  storeNewUser(user, context, country, regnum) {
+  storeNewUser(user, context, regnum, country) {
     Firestore.instance.collection('users').add({
       'email': user.email,
       'uid': user.uid,
