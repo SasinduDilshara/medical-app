@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
+import 'package:medicalapp/servicers/crud/crud.dart';
 
 import 'addarticlepage.dart';
 import 'dieseasespage.dart';
@@ -12,6 +13,7 @@ class LogingHome extends StatefulWidget {
 }
 
 class _LogingHomeState extends State<LogingHome> {
+  CrudMethod crudObj = CrudMethod();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +49,9 @@ class _LogingHomeState extends State<LogingHome> {
               FlatButton(
                 color: Colors.blue,
                 child: Text("Log out"),
-                onPressed: () {},
+                onPressed: () {
+                  crudObj.signOut(context);
+                },
               )
             ],
           ),
@@ -65,7 +69,7 @@ class _LogingHomeState extends State<LogingHome> {
           child: Icon(Icons.book),
           onPressed: () {
             // debugPrint(widget.user.email);
-            navigate(AddForm(user: widget.user));
+            crudObj.getTreatmentText('regnum', context);
           },
           tooltip: "Click here to add a article",
         ),

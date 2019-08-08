@@ -1,12 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/servicers/crud/crud.dart';
 
 class AddForm extends StatefulWidget {
   // bool isdoc = true;
-  AddForm({Key key, this.user}) : super(key: key);
+  AddForm({Key key, this.user, this.type}) : super(key: key);
   FirebaseUser user;
+  bool type;
 
   @override
   _AddFormState createState() => _AddFormState();
@@ -25,9 +26,7 @@ class _AddFormState extends State<AddForm> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    // this.a = gettera();
   }
 
   @override
@@ -84,22 +83,7 @@ class _AddFormState extends State<AddForm> {
               ),
             ),
             // gettera(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                // height: 200.0,
-                child: TextFormField(
-                  onSaved: (String input) {
-                    this.treatments = input;
-                  },
-                  controller: tec3,
-                  decoration: InputDecoration(
-                      labelText: 'Treatments',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0))),
-                ),
-              ),
-            ),
+            gettext(widget.type),
             Row(
               children: <Widget>[
                 Container(
@@ -107,9 +91,9 @@ class _AddFormState extends State<AddForm> {
                 ),
                 FlatButton(
                   onPressed: () {
-                    // newMethod();
-                    // Navigator.pop(context);
-                    // debugPrint(authorizedAccess(context));
+                    // String regnum =
+                    //     await crudObj.getUserFieldData('regnum', context);
+                    // debugPrint(regnum);
                   },
                   child: Text("Cancel"),
                   textColor: Colors.blue,
@@ -168,5 +152,28 @@ class _AddFormState extends State<AddForm> {
             ],
           );
         });
+  }
+
+  Widget gettext(bool istrue) {
+    if (istrue) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          // height: 200.0,
+          child: TextFormField(
+            onSaved: (String input) {
+              this.treatments = input;
+            },
+            controller: tec3,
+            decoration: InputDecoration(
+                labelText: 'Treatments',
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
+          ),
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 }

@@ -66,7 +66,7 @@ class _DieseasePageState extends State<DieseasePage> {
               "2019/07/02"),
 
           // articleList(),
-          articleList(),
+          // articleList(),
         ],
       ),
     );
