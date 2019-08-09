@@ -11,64 +11,77 @@ class FullDescriptionCard extends StatefulWidget {
 class _FullDescriptionCardState extends State<FullDescriptionCard> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        color: Colors.yellow,
-        // width: 350,
-        child: Column(
-          children: <Widget>[
-            Row(
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(widget._name),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            color: Colors.yellow,
+            // width: 350,
+            child: ListView(
               children: <Widget>[
-                getImage("images/doctors.jpg"),
-                Container(
-                  width: 1.0,
-                ),
-                Expanded(
-                  child: Container(
-                    height: 51.0,
-                    color: Colors.yellow[600],
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 0.0),
-                          child: Text(
-                            widget._name,
-                            style: TextStyle(
-                                fontSize: 30, color: Colors.grey[900]),
-                            // textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(children: <Widget>[
-                            Container(
-                                child: Text(
-                              "By:- ",
-                              style: TextStyle(color: Colors.grey[900]),
-                            )),
-                            Text(
-                              widget._author + "    " + widget.date,
-                              textAlign: TextAlign.end,
-                              style: TextStyle(color: Colors.grey[900]),
-                            ),
-                          ]),
-                        )
-                      ],
+                Row(
+                  children: <Widget>[
+                    getImage("images/doctors.jpg"),
+                    Container(
+                      width: 1.0,
                     ),
+                    Expanded(
+                      child: Container(
+                        height: 51.0,
+                        color: Colors.yellow[600],
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(left: 0.0),
+                              child: Text(
+                                widget._name,
+                                style: TextStyle(
+                                    fontSize: 30, color: Colors.grey[900]),
+                                // textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(children: <Widget>[
+                                Container(
+                                    child: Text(
+                                  "By:- ",
+                                  style: TextStyle(color: Colors.grey[900]),
+                                )),
+                                Text(
+                                  widget._author + "    " + widget.date,
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(color: Colors.grey[900]),
+                                ),
+                              ]),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    child: Text(
+                      " " * 30 + "Description",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    widget._description,
+                    // textAlign: TextAlign.start,
                   ),
                 ),
               ],
             ),
-            Container(
-              child: Text(
-                widget._description,
-                // textAlign: TextAlign.start,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 
   Widget getImage(String link) {
