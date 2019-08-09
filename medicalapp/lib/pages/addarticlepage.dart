@@ -1,6 +1,7 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:medicalapp/servicers/crud/crud.dart';
 
 class AddForm extends StatefulWidget {
@@ -101,6 +102,9 @@ class _AddFormState extends State<AddForm> {
                 Container(),
                 FlatButton(
                   onPressed: () {
+                    var now = new DateTime.now();
+                    var formatter = new DateFormat('yyyy-MM-dd');
+                    String formattedDate = formatter.format(now);
                     final formstate = _formkey.currentState;
                     formstate.save();
                     // Navigator.of(context).pop();
@@ -109,6 +113,7 @@ class _AddFormState extends State<AddForm> {
                       'description': this.description,
                       'treatments': this.treatments,
                       'author': this.author,
+                      'date': formattedDate,
                     };
                     crudObj.adData(data, 'dieseaseArticles').then((result) {
                       dialogTrigger(context);

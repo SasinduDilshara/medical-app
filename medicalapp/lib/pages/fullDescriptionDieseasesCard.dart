@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:medicalapp/pages/fullDescriptionDieseasesCard.dart';
 
-class DieseaseCard extends StatefulWidget {
+class FullDescriptionCard extends StatefulWidget {
   String _name, _author, _description, _link, date;
+  FullDescriptionCard(this._name, this._author, this._description, this.date);
   @override
-  DieseaseCard(this._name, this._author, this._description, this.date);
-  _DieseaseCardState createState() => _DieseaseCardState();
+  @override
+  _FullDescriptionCardState createState() => _FullDescriptionCardState();
 }
 
-class _DieseaseCardState extends State<DieseaseCard> {
+class _FullDescriptionCardState extends State<FullDescriptionCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -65,25 +65,6 @@ class _DieseaseCardState extends State<DieseaseCard> {
                 // textAlign: TextAlign.start,
               ),
             ),
-            Row(
-              children: <Widget>[
-                Container(
-                  width: 230,
-                ),
-                FlatButton(
-                  textColor: Colors.lightBlue,
-                  child: Text("Read More.."),
-                  onPressed: () {
-                    navigate(FullDescriptionCard(
-                      widget._name,
-                      widget._author,
-                      widget._description,
-                      widget.date,
-                    ));
-                  },
-                )
-              ],
-            )
           ],
         ),
       ),
@@ -105,11 +86,5 @@ class _DieseaseCardState extends State<DieseaseCard> {
       height: 50.0,
       child: im,
     );
-  }
-
-  navigate(Widget wid) {
-    return Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return wid;
-    }));
   }
 }

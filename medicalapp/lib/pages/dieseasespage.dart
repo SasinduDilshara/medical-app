@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:medicalapp/componentwidgets/dieseasecard.dart';
 import 'package:medicalapp/componentwidgets/searchbar.dart';
@@ -27,9 +28,7 @@ class _DieseasePageState extends State<DieseasePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.book),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return AddForm();
-          }));
+          crudObj.getTreatmentText('regnum', context);
         },
         tooltip: "Click here to add a article",
       ),
@@ -59,13 +58,14 @@ class _DieseasePageState extends State<DieseasePage> {
             ),
           ),
 
-          DieseaseCard(
-              'Dengue',
-              "Sasindu",
-              "Recent cases of Dengue have been reported from Sri Lanka. The most affected areas include Colombo, Galle, Jaffna, and Gampaha. Risk of Dengue exists throughout the country and transmission occurs year-round. There are two peak seasons for Dengue transmission in Sri Lanka: from October to December and from May to July.",
-              "2019/07/02"),
+          // DieseaseCard(
+          //     'Dengue',
+          //     "Sasindu",
+          //     "Recent cases of Dengue have been reported from Sri Lanka. The most affected areas include Colombo, Galle, Jaffna, and Gampaha. Risk of Dengue exists throughout the country and transmission occurs year-round. There are two peak seasons for Dengue transmission in Sri Lanka: from October to December and from May to July.",
+          //     "2019/07/02"),
 
           // articleList(),
+
           articleList(),
         ],
       ),
@@ -73,41 +73,62 @@ class _DieseasePageState extends State<DieseasePage> {
   }
 
   articleList() {
-    crudObj.getData().then((results) {
-      articles = results;
-    });
+    // crudObj.getData().then((results) {
+    //   articles = results;
+    // });
+
+    // crudObj.getData().then((results) {
+    //   articles = results;
+    //   // Future.delayed(duration:)
+    // });
+
     setState(() {
-      crudObj.getData().then((results) {
+      crudObj.getData().then((results) async {
         articles = results;
-        if (articles != null) {
-          debugPrint("a" * 100);
-          return StreamBuilder(
-            stream: articles,
-            builder: (context, snapshot) {
-              // debugPrint(snapshot.data.documents[0]['title'] + "a" * 100000);
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListView.builder(
-                  itemCount: snapshot.data.documents.length,
-                  itemBuilder: (context, i) {
-                    // debugPrint(snapshot.data.documents[i]['title']);
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: DieseaseCard(
-                          snapshot.data.documents[i]['title'],
-                          snapshot.data.documents[i]['author'],
-                          snapshot.data.documents[i]['description'],
-                          ''),
-                    );
-                  },
-                ),
-              );
-            },
-          );
-        } else {
-          Text("loading");
-        }
+        // await Future.delayed(Duration(microseconds: 1000000));
       });
     });
+    // int a = await articles.length;
+    if (articles != null) {
+      // debugPrint("b" * 100);
+      return StreamBuilder(
+        stream: articles,
+        builder: (context, snapshot) {
+          int length = snapshot.data.documents.length;
+          // debugPrint("c" * 100);
+          // debugPrint(snapshot.data.documents[1]['title'] + " " + "a" * 100000);
+          // debugPrint(snapshot.data.documents.length.toString());
+          return Column(
+            children: <Widget>[
+              createDiesecard(0, length, snapshot.data.documents),
+              createDiesecard(1, length, snapshot.data.documents),
+              createDiesecard(2, length, snapshot.data.documents),
+              createDiesecard(3, length, snapshot.data.documents),
+              createDiesecard(4, length, snapshot.data.documents),
+              // DieseaseCard(
+              //     var c = snapshot.data.documents[0],
+              //     snapshot.data.documents[0]['author'],
+              //     snapshot.data.documents[0]['description'],
+              //     ''),
+            ],
+          );
+        },
+      );
+    } else {
+      return Center(
+          child: Text(
+        "loading",
+        style: TextStyle(fontSize: 18),
+      ));
+    }
+  }
+
+  Widget createDiesecard(int num1, int bound, List data) {
+    if (num1 < bound) {
+      return DieseaseCard(data[num1]['title'], data[num1]['author'],
+          data[num1]['description'], data[num1]['date']);
+    } else {
+      return Container();
+    }
   }
 }
